@@ -12,6 +12,7 @@ public class QuizActivity extends AppCompatActivity {
     private Button mTrueButton;
     private Button mFalseButton;
     private Button mNextButton;
+    private Button mPrevButton;
     private TextView mQuestionTextView;
 
     private TrueFalse[] mQuestionBank = new TrueFalse[]{
@@ -23,21 +24,30 @@ public class QuizActivity extends AppCompatActivity {
     };
     private int mCurrentIndex = 0;
 
-    private void updateQuestion(){
-        mCurrentIndex = (mCurrentIndex+1)%mQuestionBank.length;
-        int question= mQuestionBank[mCurrentIndex].getQuestion();
+    private void updateQuestion() {
+        mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+        int question = mQuestionBank[mCurrentIndex].getQuestion();
         mQuestionTextView.setText(question);
     }
 
-    private void checkAnswer(boolean userPressedTrue){
+    private void prevUpdateQuestion() {
+        if(mCurrentIndex == 0){
+            mCurrentIndex = mQuestionBank.length-1;
+        }else mCurrentIndex = (mCurrentIndex - 1) % mQuestionBank.length;
+
+        int question = mQuestionBank[mCurrentIndex].getQuestion();
+        mQuestionTextView.setText(question);
+    }
+
+    private void checkAnswer(boolean userPressedTrue) {
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].isTrueQuestion();
         int messageResId = 0;
-        if (userPressedTrue == answerIsTrue){
+        if (userPressedTrue == answerIsTrue) {
             messageResId = R.string.correct_tosat;
-        }else {
+        } else {
             messageResId = R.string.incorrect_toast;
         }
-        Toast.makeText(this,messageResId,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -53,7 +63,7 @@ public class QuizActivity extends AppCompatActivity {
         mTrueButton = (Button) findViewById(R.id.true_button);
         mFalseButton = (Button) findViewById(R.id.false_button);
         mNextButton = (Button) findViewById(R.id.next_button);
-
+        mPrevButton = (Button) findViewById(R.id.prev_button);
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,10 +90,16 @@ public class QuizActivity extends AppCompatActivity {
                 updateQuestion();
             }
         });
-
-        mQuestionTextView.setOnClickListener(new View.OnClickListener(){
+        mPrevButton.setOnClickListener(new View.OnClickListener() {
             @Override
-        public void onClick(View v){
+            public void onClick(View v) {
+                prevUpdateQuestion();
+            }
+        });
+
+        mQuestionTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 updateQuestion();
             }
         });
