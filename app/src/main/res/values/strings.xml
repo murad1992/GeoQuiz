@@ -6,9 +6,9 @@
     <string name="true_button">True</string>
     <string name="false_button">False</string>
     <string name="next_button">Next</string>
-    <string name="question_oceans">The Pacific Ocean is Larger</string>
-    <string name="question_mideast">The Suez Canal connects</string>
-    <string name="question_africa">The sours of the Nile river</string>
-    <string name="question_americas">The Amazon River</string>
-    <string name="question_asia">Lake Baikal is the world\'s</string>
+    <string name="question_oceans">111The Pacific Ocean is Larger</string>
+    <string name="question_mideast">222The Suez Canal connects</string>
+    <string name="question_africa">333The sours of the Nile river</string>
+    <string name="question_americas">444The Amazon River</string>
+    <string name="question_asia">555Lake Baikal is the world\'s</string>
 </resources>
