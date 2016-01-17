@@ -2,6 +2,7 @@ package com.example.murad.geoquiz;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,9 @@ public class QuizActivity extends AppCompatActivity {
     private ImageButton mNextButton;
     private ImageButton mPrevButton;
     private TextView mQuestionTextView;
+
+    private static final String TAG = "QuizActivity";
+
 
     private TrueFalse[] mQuestionBank = new TrueFalse[]{
             new TrueFalse(R.string.question_oceans, true),
@@ -108,7 +112,35 @@ public class QuizActivity extends AppCompatActivity {
         updateQuestion();
         /////////////////////////////////////////////////////////////////////////////////////
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart()---------------------called");
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG,"onPause()---------------------called");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume()---------------------called");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop()---------------------called");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG,"onDestroy()--------------------called");
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_quiz, menu);
