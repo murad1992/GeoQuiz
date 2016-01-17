@@ -59,6 +59,7 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         ////////////////////////////////////////////////////////////////////////////////////
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate(Bundle)----------------вызвалось блеять");
         setContentView(R.layout.activity_quiz);
 
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
