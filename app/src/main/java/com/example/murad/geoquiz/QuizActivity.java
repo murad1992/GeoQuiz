@@ -110,7 +110,7 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-        updateQuestion();
+        mQuestionTextView.setText(mQuestionBank[mCurrentIndex].getQuestion());
         /////////////////////////////////////////////////////////////////////////////////////
     }
     @Override
@@ -140,7 +140,7 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG,"onDestroy()--------------------called");
+        Log.d(TAG, "onDestroy()--------------------called");
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
