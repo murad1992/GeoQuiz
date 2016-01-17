@@ -30,9 +30,9 @@ public class QuizActivity extends AppCompatActivity {
     private int mCurrentIndex = 0;
 
     private void updateQuestion() {
+        mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
         int question = mQuestionBank[mCurrentIndex].getQuestion();
         mQuestionTextView.setText(question);
-        mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
     }
 
     private void prevUpdateQuestion() {
