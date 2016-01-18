@@ -30,8 +30,15 @@ public class QuizActivity extends AppCompatActivity {
 
     private void updateQuestion() {
         mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+        //Проверка на исключения выхода за границы массива
+        try {
+            mQuestionBank[mCurrentIndex].getQuestion();
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            Log.e(TAG, "Index was out of bounds" + ex);
+        }
         int question = mQuestionBank[mCurrentIndex].getQuestion();
         mQuestionTextView.setText(question);
+
     }
 
     private void checkAnswer(boolean userPressedTrue) {
@@ -65,6 +72,7 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                Toast.makeText(QuizActivity.this, R.string.correct_tosat, Toast.LENGTH_LONG).show();
                 checkAnswer(true);
+                Log.d(TAG, "Current question index:" + mCurrentIndex);
 
             }
         });
@@ -74,6 +82,7 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                Toast.makeText(QuizActivity.this, R.string.incorrect_toast, Toast.LENGTH_LONG).show();
                 checkAnswer(false);
+                Log.d(TAG, "Current question index:" + mCurrentIndex);
             }
         });
 
@@ -84,7 +93,7 @@ public class QuizActivity extends AppCompatActivity {
 //                int question = mQuestionBank[mCurrentIndex].getQuestion();
 //                mQuestionTextView.setText(question);
                 updateQuestion();
-
+                Log.d(TAG, "Current question index:" + mCurrentIndex);
             }
         });
         //Проверка наличия сохраненных данных в savedInstanceState
