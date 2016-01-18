@@ -61,8 +61,7 @@ public class QuizActivity extends AppCompatActivity {
 
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
 
-
-        //Обработчики кнопок
+        //находим кнопки и привызываем их к переменным типа Button
         mTrueButton = (Button) findViewById(R.id.true_button);
         mFalseButton = (Button) findViewById(R.id.false_button);
         mNextButton = (Button) findViewById(R.id.next_button);
