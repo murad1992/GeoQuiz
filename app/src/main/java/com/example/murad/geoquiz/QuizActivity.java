@@ -29,7 +29,9 @@ public class QuizActivity extends AppCompatActivity {
     private int mCurrentIndex = 0;
 
     private void updateQuestion() {
-        mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+//Логирование с исключением
+//Log.d(TAG, "Updating question text for  question:" + mCurrentIndex, new Exception());
+
         //Проверка на исключения выхода за границы массива
         try {
             mQuestionBank[mCurrentIndex].getQuestion();
@@ -91,6 +93,7 @@ public class QuizActivity extends AppCompatActivity {
 //                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
 //                int question = mQuestionBank[mCurrentIndex].getQuestion();
 //                mQuestionTextView.setText(question);
+                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
                 updateQuestion();
                 Log.d(TAG, "Current question index:" + mCurrentIndex);
             }
@@ -100,7 +103,7 @@ public class QuizActivity extends AppCompatActivity {
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
         }
 
-        mQuestionTextView.setText(mQuestionBank[mCurrentIndex].getQuestion());
+        updateQuestion();
 
         /////////////////////////////////////////////////////////////////////////////////////
     }
