@@ -24,14 +24,15 @@ public class QuizActivity extends AppCompatActivity {
 
 
     private TrueFalse[] mQuestionBank = new TrueFalse[]{
-            new TrueFalse(R.string.question_oceans, true),
-            new TrueFalse(R.string.question_mideast, false),
-            new TrueFalse(R.string.question_africa, false),
-            new TrueFalse(R.string.question_americas, true),
-            new TrueFalse(R.string.question_asia, true),
+            new TrueFalse(R.string.question_oceans, true,false),
+            new TrueFalse(R.string.question_mideast, false,false),
+            new TrueFalse(R.string.question_africa, false,false),
+            new TrueFalse(R.string.question_americas, true,false),
+            new TrueFalse(R.string.question_asia, true,false),
     };
     private int mCurrentIndex = 0;
     private boolean mIsCheater;
+
 
     private void updateQuestion() {
 //Логирование с исключением
@@ -51,7 +52,7 @@ public class QuizActivity extends AppCompatActivity {
     private void checkAnswer(boolean userPressedTrue) {
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].isTrueQuestion();
         int messageResId = 0;
-        if (mIsCheater) {
+        if (mQuestionBank[mCurrentIndex].isIsCheater()) {
             messageResId = R.string.judgment_toast;
         } else {
             if (userPressedTrue == answerIsTrue) {
@@ -68,10 +69,14 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         ////////////////////////////////////////////////////////////////////////////////////
         super.onCreate(savedInstanceState);
+
+
         if (savedInstanceState != null) {
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
-            mIsCheater = savedInstanceState.getBoolean(KEY_mIsCheater);
         }
+
+
+
         Log.d(TAG, "onCreate(Bundle)----------------вызвалось блеять");
         setContentView(R.layout.activity_quiz);
         Log.d(TAG, "Current question index:" + mCurrentIndex);
@@ -125,7 +130,7 @@ public class QuizActivity extends AppCompatActivity {
                 //вызов интента
                 //startActivity(i);
                 // с возваратом значения из cheatActivity
-                startActivityForResult(i,0);
+                startActivityForResult(i,1);
             }
         });
 
@@ -174,7 +179,8 @@ public class QuizActivity extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
         Log.i(TAG, "savedInstanceState-------------вызвался");
         savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
-        savedInstanceState.putBoolean(KEY_mIsCheater, mIsCheater);
+
+
     }
 
     @Override
@@ -189,6 +195,10 @@ public class QuizActivity extends AppCompatActivity {
         if(data == null){
             return;
         }
+        Log.i(TAG,"Начало начал   " + mIsCheater);
         mIsCheater = data.getBooleanExtra(CheatActivity.EXTRA_ANSWER_SHOWN,false);
+        Log.i(TAG,"Начально значение   " + mIsCheater);
+        mQuestionBank[mCurrentIndex].setIsCheater(mIsCheater);
+        Log.i(TAG, "Что занесло в массив  " + mQuestionBank[mCurrentIndex].isIsCheater());
     }
 }

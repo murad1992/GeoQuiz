@@ -12,10 +12,19 @@ public class TrueFalse {
     public void setTrueQuestion(boolean trueQuestion) {mTrueQuestion = trueQuestion;}
 
 
+    public boolean mIsCheater;
+    public boolean isIsCheater() {return mIsCheater;}
+    public void setIsCheater(boolean isCheater) {mIsCheater = isCheater;}
 
 
-    public TrueFalse(int question, boolean trueQuestion) {
+
+
+
+
+    public TrueFalse(int question, boolean trueQuestion, boolean isCheater) {
         mQuestion = question;
-        mTrueQuestion = trueQuestion;}
+        mTrueQuestion = trueQuestion;
+        mIsCheater = isCheater;}
+
 
 }

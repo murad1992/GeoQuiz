@@ -39,11 +39,11 @@ public class CheatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
-            mCheatingStatus = savedInstanceState.getInt(KEY_CHEATING_SAVE);
+            mCheatingStatus = savedInstanceState.getInt(KEY_CHEATING_SAVE,0);
         }
         setContentView(R.layout.activity_cheat);
         Log.d(TAG, "onCreate   CheatActivity--------------------------------");
-        mAnswerIsTrue = getIntent().getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false);
+        mAnswerIsTrue = getIntent().getBooleanExtra(EXTRA_ANSWER_IS_TRUE,false);
 
         mAnswerTextView = (TextView) findViewById(R.id.answerTextView);
 
@@ -57,9 +57,10 @@ public class CheatActivity extends AppCompatActivity {
                 mAnswerTextView.setText(R.string.false_button);
             }
             setAnswerShownResult(true);
-        } else {
-            setAnswerShownResult(false);
         }
+////        else {
+//            setAnswerShownResult(false);
+//        }
 
         Log.i(TAG, "mCheatingStatus----=====---" + mCheatingStatus);
         mShowAnswer.setOnClickListener(new View.OnClickListener() {
