@@ -20,6 +20,8 @@ public class QuizActivity extends AppCompatActivity {
     private static final String TAG = "QuizActivity";
     // Ключ пара = значение для сохранения в Bundle
     private static final String KEY_INDEX = "index";
+    private static final String KEY_mIsCheater = "key_mischeater";
+
 
     private TrueFalse[] mQuestionBank = new TrueFalse[]{
             new TrueFalse(R.string.question_oceans, true),
@@ -66,9 +68,13 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         ////////////////////////////////////////////////////////////////////////////////////
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+            mIsCheater = savedInstanceState.getBoolean(KEY_mIsCheater);
+        }
         Log.d(TAG, "onCreate(Bundle)----------------вызвалось блеять");
         setContentView(R.layout.activity_quiz);
-
+        Log.d(TAG, "Current question index:" + mCurrentIndex);
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
 
         //находим кнопки и привызываем их к переменным типа Button
@@ -117,7 +123,7 @@ public class QuizActivity extends AppCompatActivity {
                 boolean answerIsTrue = mQuestionBank[mCurrentIndex].isTrueQuestion();
                 i.putExtra(CheatActivity.EXTRA_ANSWER_IS_TRUE,answerIsTrue);
                 //вызов интента
-                startActivity(i);
+                //startActivity(i);
                 // с возваратом значения из cheatActivity
                 startActivityForResult(i,0);
             }
@@ -125,9 +131,7 @@ public class QuizActivity extends AppCompatActivity {
 
         //////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         //Проверка наличия сохраненных данных в savedInstanceState
-        if (savedInstanceState != null) {
-            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
-        }
+
 
         updateQuestion();
 
@@ -170,6 +174,7 @@ public class QuizActivity extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
         Log.i(TAG, "savedInstanceState-------------вызвался");
         savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+        savedInstanceState.putBoolean(KEY_mIsCheater, mIsCheater);
     }
 
     @Override
