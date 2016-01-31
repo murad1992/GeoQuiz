@@ -29,6 +29,7 @@ public class QuizActivity extends AppCompatActivity {
             new TrueFalse(R.string.question_asia, true),
     };
     private int mCurrentIndex = 0;
+    private boolean mIsCheater;
 
     private void updateQuestion() {
 //Логирование с исключением
@@ -48,13 +49,18 @@ public class QuizActivity extends AppCompatActivity {
     private void checkAnswer(boolean userPressedTrue) {
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].isTrueQuestion();
         int messageResId = 0;
-        if (userPressedTrue == answerIsTrue) {
-            messageResId = R.string.correct_tosat;
+        if (mIsCheater) {
+            messageResId = R.string.judgment_toast;
         } else {
-            messageResId = R.string.incorrect_toast;
+            if (userPressedTrue == answerIsTrue) {
+                messageResId = R.string.correct_tosat;
+            } else {
+                messageResId = R.string.incorrect_toast;
+            }
         }
-        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
-    }
+            Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
+        }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +103,7 @@ public class QuizActivity extends AppCompatActivity {
 //                int question = mQuestionBank[mCurrentIndex].getQuestion();
 //                mQuestionTextView.setText(question);
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                mIsCheater = false;
                 updateQuestion();
                 Log.d(TAG, "Current question index:" + mCurrentIndex);
             }
@@ -109,7 +116,10 @@ public class QuizActivity extends AppCompatActivity {
                 //включаем дополнения в интент
                 boolean answerIsTrue = mQuestionBank[mCurrentIndex].isTrueQuestion();
                 i.putExtra(CheatActivity.EXTRA_ANSWER_IS_TRUE,answerIsTrue);
+                //вызов интента
                 startActivity(i);
+                // с возваратом значения из cheatActivity
+                startActivityForResult(i,0);
             }
         });
 
@@ -169,4 +179,11 @@ public class QuizActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data == null){
+            return;
+        }
+        mIsCheater = data.getBooleanExtra(CheatActivity.EXTRA_ANSWER_SHOWN,false);
+    }
 }
