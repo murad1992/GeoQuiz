@@ -19,6 +19,17 @@ public class QuizActivity extends AppCompatActivity {
     private TextView mQuestionTextView;
     private Button mCheatButton;
 
+    private boolean mIsCheater;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(data == null){
+         return;
+        }
+        mIsCheater = data.getBooleanExtra(CheatActivity.EXTRA_ANSWER_SHOW,false);
+    }
+
     private static final String TAG = "QuizActivity";
 
 
@@ -49,10 +60,13 @@ public class QuizActivity extends AppCompatActivity {
     private void checkAnswer(boolean userPressedTrue) {
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].isTrueQuestion();
         int messageResId = 0;
+        if(mIsCheater){messageResId = R.string.correct_tosat;}
+        else{
         if (userPressedTrue == answerIsTrue) {
             messageResId = R.string.correct_tosat;
         } else {
             messageResId = R.string.incorrect_toast;
+        }
         }
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
     }
@@ -95,7 +109,8 @@ public class QuizActivity extends AppCompatActivity {
                 Intent i = new Intent(QuizActivity.this,CheatActivity.class);
                 boolean answerIsTrue = mQuestionBank[mCurrentIndex].isTrueQuestion();
                 i.putExtra(CheatActivity.EXTRA_ANSWER_IS_TRUE,answerIsTrue);
-                startActivity(i);
+//                startActivity(i);
+                startActivityForResult(i,0);
             }
         });
 
@@ -105,7 +120,9 @@ public class QuizActivity extends AppCompatActivity {
 //                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
 //                int question = mQuestionBank[mCurrentIndex].getQuestion();
 //                mQuestionTextView.setText(question);
+                mIsCheater = false;
                 updateQuestion();
+
             }
         });
         mPrevButton.setOnClickListener(new View.OnClickListener() {
