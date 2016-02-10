@@ -1,8 +1,10 @@
 package com.example.murad.geoquiz;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,20 +18,25 @@ public class CheatActivity extends AppCompatActivity {
 
     private TextView mAnswerTextView;
     private Button mShowAnswer;
+    private TextView mWinVersion;
+    private static final String TAG = "QuizActivity";
 
     private void setAnswerShownResult(boolean isAnswerShown) {
         Intent data = new Intent();
         data.putExtra(EXTRA_ANSWER_SHOW, isAnswerShown);
         setResult(RESULT_OK, data);
     }
-
+    private int winWersn = Build.VERSION.SDK_INT;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheat);
 
+        Log.d(TAG, "---------------- " + winWersn);
         setAnswerShownResult(false);
         mAnswerIsTrue = getIntent().getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false);
+        mWinVersion = (TextView) findViewById(R.id.winver);
+   mWinVersion.setHint("Версия Андроид " + Integer.toString(winWersn));
 
         mAnswerTextView = (TextView) findViewById(R.id.answerTextView);
         mShowAnswer = (Button) findViewById(R.id.showAnswerButton);
