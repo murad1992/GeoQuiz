@@ -12,4 +12,5 @@
     <string name="question_africa">333The sours of the Nile river</string>
     <string name="question_americas">444The Amazon River</string>
     <string name="question_asia">555Lake Baikal is the world\'s</string>
+    <string name="judgment_toast">Подсмотрел</string>
 </resources>
